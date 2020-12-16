@@ -1,0 +1,33 @@
+{
+  "name": "heroku-cra-node",
+  "version": "3.0.0",
+  "description": "How to use create-react-app with a custom Node API on Heroku",
+  "engines": {
+    "node": "10.x"
+  },
+  "scripts": {
+    "start": "node server",
+    "react-ui-install": "cd react-ui/ && npm install",
+    "build": "cd react-ui/ && npm run build",
+    "test": "cd react-ui/ && npm run test"
+  },
+  "cacheDirectories": [
+    "node_modules",
+    "react-ui/node_modules"
+  ],
+  "dependencies": {
+    "express": "^4.16.4",
+    "serve": "^11.3.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ratheeshkm/heroku-cra-node.git"
+  },
+  "keywords": [
+    "node",
+    "heroku",
+    "create-react-app",
+    "react"
+  ],
+  "license": "MIT"
+}
