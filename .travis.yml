@@ -1,14 +1,14 @@
 language: node_js
 node_js:
-  - '12'
+- '12'
 script:
-  - npm run react-ui-install
-  - npm run build
-  - npm run test
+- npm run react-ui-install
+- npm run build
+- npm run test
 deploy:
   provider: heroku
   app: lileavetracker
   on: master
   skip_cleanup: true
   api_key:
-    secure: mP3qK9Opfkinz2EnWpTwW6SznsI2h9Fpx2hcXTLg+kgEaO0WsTkMqa6F2ECZQoFvycHAgohsPpOCo9Tb8BWSEb5ato2Qnu5DCYwuPNU4BW5zvyxYh7p4gwWG67qpWXjc1i5meTNqVH2kzRFb2DB1BTRLmNOBfL6Ox1Mw66sPQjLbkESVUnsxQnNBR+bWOFfVjJde72DhoFu3y/Jz9RF7GN9C3m7CrlIqjwsiPQ7h3KXlCpzQyKoED5gfSKMj7U17RyU5BH9lYDnEVMGE67UHb8lVLJ8EKONDNffmLJzKiioXkXFS6dtb62tRzw5T2f//t/N77RJuQymv1eQEMss6gScCiu7Dnsu39+OGifR2rNcXhyUKplqc2faKRkXDs/MpWnZU3havsgW+9H4Jht6CQwi3ujhTH/Xqw2iP55F+qvIu0TPxeZDyn6w94XEAOiv9KJtNLp+WzPk4ZSQD1yCI5IvJOwdYqSL7hSmUJPevYCpa4zTmu+/gbHHnq+yhZUGgsVfPFZFT2eokb5Vc9cMvgXbMnBqQIr8aT7uAZOy9kF244ml9+nhfE58pHz0/DZYR+PiEBSVxrMEAczct1EpGio857estHYKMtPki0sM98GIguyHlfUKke5tYkc7nm6DVAQdS4QVG896ot3ji0yHPIZtk2t8iQV9LPur4nTRUH8I=
+    secure: DxdeLCovCYNsLZH1J4iF02UiPapKm77vP2VoM1BhZ7o5tysXJhJW/QUjkyVlXGsiKcL5jR30tWCEAwFSxemDf5+8icZrRbBfZDWwq2Y6YvqNiH9KYa8+8Zihv4JjdeUSRQO8eY7xNvLCUneSCzFmz+VsbiTfqlcizkuIW23oW1LjcPH7S3XV5B7peE6xIjkvZ2O11LrdLAYB48mV+XOdtFlJzbG7FgWBPyrxEoj4tZO/41iSB0V/pC95XYPQQ0KPBUm5pl8zKczSD8DubyL4aqU7vVT86ph3imUmwBCU+n6U2/Vqfz9D++PWffXtId2+yZTGU76SqBZz6SSqbdudILeJDYAomAM+qzpauC/exbcdYGpCA/OUh2XbvvYamT6uHTuNH6C8A9UmCp3Pk5SJShVId/LIwcqnnryxCUWfefKlteuBUO1oFWUkS8Cn2am073M7oiyEWSrAMtUHkZr/Aq4ZfLBopcegCTO5almAtLuDI7NmoEctq2vmuBFs08bIqrJbm7KUMg6ikH1XjPBEQnCNXzWvcY3qfzUH2x7Ityv5b7Jxsjr3FGGuhwurvODp398dFFEz5272r2EGSR14birZ/GUuRjaGezfMV8HLPrGF+/boHZcJyNeIvuWebb6TqrQI2EoLxN+xG5aWYNsTRMGPm27Wa0TNTKpqmoTTYxQ=
