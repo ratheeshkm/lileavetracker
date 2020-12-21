@@ -188,6 +188,7 @@ const ApplyLeave = (props) => {
 											innerRef={register}
 											invalid={!!errors.description}
 											data-testid="description"
+											onChange={handleChange}
 										/>
 										<div className="text-danger">
 											{errors.description && errors.description.message}

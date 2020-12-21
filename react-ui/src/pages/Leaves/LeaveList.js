@@ -9,7 +9,7 @@ import { formatColumn } from '../../components/FormatColumn';
 import ActionDropdown from '../../components/ActionDropDown';
 
 const ApplyLeave = (props) => {
-  const { leave, getLeave, leaveTypes, getStatus, status } = props;
+  const { leave, getLeave, leaveTypes, getStatus, getLeaveTypes, status } = props;
 
   useEffect(() => {
 		getLeave();
@@ -19,6 +19,9 @@ const ApplyLeave = (props) => {
 		getStatus();
   }, [getStatus, status.length]);
 
+  useEffect(() => {
+		getLeaveTypes();
+  }, [getLeaveTypes]);
   
   if(!leave) return null;
   console.log("leave-->", leave)
@@ -41,7 +44,7 @@ const ApplyLeave = (props) => {
     return <span>{cellValue}</span>;
   }
 
-  function desciptionColumnFormatter(cell, row, rowIndex, formatExtraData) {
+  function descriptionColumnFormatter(cell, row, rowIndex, formatExtraData) {
     let cellValue = formatColumn(
       cell,
       row,
@@ -121,7 +124,8 @@ const ApplyLeave = (props) => {
       dataField: 'description',
       text: 'Description',
       sort: true,
-      formatter: desciptionColumnFormatter,
+      formatter: descriptionColumnFormatter,
+      editable: false
     },
     {
       dataField: 'leavecount',

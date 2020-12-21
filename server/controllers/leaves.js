@@ -30,6 +30,7 @@ module.exports = {
 	saveLeave: async(req, res) => {
 		let result = '';
 		const { leaveType, startDateFormatted, endDateFormatted, description, leaveCount, userid } = req.body;
+		console.log(req.body)
 		try {
 			const client = await pool.connect();
 			const result = await client.query(`INSERT INTO leave (type, startdate, enddate, description, status, leavecount, userid)
