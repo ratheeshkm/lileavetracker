@@ -147,9 +147,6 @@ const ApplyLeave = (props) => {
 											onChange= {(v,f) => handleDateChange(v, f, 'startDate')} 
 											dateFormat='DD-MM-YYYY'  
 											invalid={!!errors.startDate}
-											ref={register({
-												validate: value => value !== "bill"
-											})}
 											/>
 										<div className="text-danger">
 											{errors.startDate && errors.startDate.message}
