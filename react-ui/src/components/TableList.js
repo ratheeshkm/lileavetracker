@@ -161,12 +161,6 @@ const TableList = (props) => {
 		if (!row) {
 			return null;
 		}
-		let action = '';
-		let currentEditedRow = formatExtraData.editedRows.filter(item => item.rowId === row.id) || [];
-		if (currentEditedRow.length) {
-			[{ action = '' }] = currentEditedRow;
-		}
-		//let actionText = (action === 'Delete') ? 'Undo Delete' : 'Delete';
 		let actionText = 'Cancel';
 		return (
 			<Fragment>

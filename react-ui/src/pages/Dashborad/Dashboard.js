@@ -1,11 +1,10 @@
-import React, { Fragment, useState} from 'react';
+import React, { Fragment } from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import AppHeader from '../../Layout/AppHeader';
 import AppSidebar from '../../Layout/AppSidebar';
 import AppFooter from '../../Layout/AppFooter';
-import { Row, Col, Card } from 'reactstrap';
+import { Row, Col } from 'reactstrap';
 import PageTitle from '../../Layout/AppMain/PageTitle';
-import { v4 as uuidv4 } from 'uuid';
 
 const Dashborad = (props) => {
 	return (

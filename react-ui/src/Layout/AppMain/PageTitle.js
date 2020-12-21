@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import cx from 'classnames';
-import TitleComponent2 from './PageTitleExamples/Variation2'
+
 
 class PageTitle extends Component {
 

@@ -1,7 +1,7 @@
 import React from 'react';
 
 function formatColumn (cellValue, row, rowIndex, formatExtraData, fieldNameParam, fieldSearchArray="",  fieldName="") {
-	const data = formatExtraData && formatExtraData.filter(item => item.rowId === row.id) || [];
+	const data = (formatExtraData && formatExtraData.filter(item => item.rowId === row.id)) || [];
 	let fieldNameOrg = (fieldName) ? fieldName : 'name';
 	if (fieldSearchArray.length) {
 		cellValue = fieldSearchArray.filter(item => item.id === cellValue)[0][fieldNameOrg];

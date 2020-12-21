@@ -2,8 +2,8 @@ import React, {Fragment} from 'react';
 
 import {
     DropdownToggle, DropdownMenu,
-    Nav, Button, NavItem, NavLink,
-    UncontrolledTooltip, UncontrolledButtonDropdown
+    Nav, NavItem, NavLink,
+    UncontrolledButtonDropdown
 } from 'reactstrap';
 
 import {
@@ -13,7 +13,6 @@ import {
 
 
 import {
-    faCalendarAlt,
     faAngleDown
 
 } from '@fortawesome/free-solid-svg-icons';
