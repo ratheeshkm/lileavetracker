@@ -1,10 +1,10 @@
 language: node_js
 node_js:
-- '12'
+  - '12'
 script:
-- npm run react-ui-install
-- npm run build
-- npm run test
+  - npm run react-ui-install
+  - npm run build
+  - npm run test
 deploy:
   provider: heroku
   app: lileavetracker
