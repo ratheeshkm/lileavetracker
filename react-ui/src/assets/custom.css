@@ -1,0 +1,147 @@
+.pagination {
+	justify-content: flex-end;
+}
+
+.react-bootstrap-table th[data-row-selection] {
+  width: 40px;
+}
+
+.selection-row {
+	background-color: '#c8e6c9';
+}
+
+.action-buttons {
+	margin-left: 15px;
+	float: right;
+}
+
+.table-action {
+	width: 10%;
+	text-align: center;
+}
+
+.add-restaurant-details {
+	margin-top: 50px;
+}
+
+.nav-link.active {
+	background-color: #d1f3ff;
+  font-weight: bold;
+}
+
+.nav.flex-column {
+	border: solid 1px;
+}
+
+.nav .active, #categorisList .active{
+	background-color: #d1f3ff;
+	font-weight: bold;
+}
+
+.nav-item.nav-item-header {
+	font-size: 1.0rem;
+	font-weight: normal;
+}
+
+.child {
+	margin-left: 10px
+}
+
+#categorisList .nav-link {
+	margin-left: 10px
+}
+
+.modal {
+  font-size: 12px;
+}
+.modal > .header {
+  width: 100%;
+  border-bottom: 1px solid gray;
+  font-size: 18px;
+  text-align: center;
+  padding: 5px;
+}
+.modal > .content {
+  width: 100%;
+  padding: 10px 5px;
+}
+.modal > .actions {
+  width: 100%;
+  padding: 10px 5px;
+  margin: auto;
+  text-align: center;
+}
+.modal > .close {
+  cursor: pointer;
+  position: absolute;
+  display: block;
+  padding: 2px 5px;
+  line-height: 20px;
+  right: -10px;
+  top: -10px;
+  font-size: 24px;
+  background: #ffffff;
+  border-radius: 18px;
+  border: 1px solid #cfcece;
+}
+
+#paymentType div {
+	margin: 10px 0px;
+}
+
+.no-orders {
+	margin: 0 auto;
+  padding-top: 15px;
+  font-weight: bold;
+}
+
+.app-header-right .nav.flex-column {
+	border: none;
+}
+
+.input-group {
+  clear: both;
+  margin: 0px;
+	position: relative;
+	margin-top: -3px;
+}
+
+.input-group input[type='button'] {
+  background-color: #ffffff;
+  min-width: 45px;
+  width: auto;
+  transition: all 300ms ease;
+}
+
+.input-group .button-minus,
+.input-group .button-plus {
+  font-weight: bold;
+  height: 30px;
+  padding: 0;
+  width: 45px;
+  position: relative;
+}
+
+.input-group .quantity-field {
+  position: relative;
+  height: 30px;
+  left: -6px;
+  text-align: center;
+  width: 50px;
+  display: inline-block;
+  font-size: 13px;
+  margin: 0 0 5px;
+  resize: vertical;
+  background-color: #e0e0e0;
+}
+
+.button-plus {
+  left: -13px;
+}
+
+input[type='number'] {
+  -moz-appearance: textfield;
+  -webkit-appearance: none;
+}
+
+/* Input add minus button css */

@@ -2,9 +2,12 @@ const express = require('express');
 const path = require('path');
 const cluster = require('cluster');
 const numCPUs = require('os').cpus().length;
+const bodyParser = require("body-parser");
 
 const isDev = process.env.NODE_ENV !== 'production';
 const PORT = process.env.PORT || 5000;
+
+const router = express.Router();
 
 // Multi-process to utilize all CPU cores.
 if (!isDev && cluster.isMaster) {
@@ -22,6 +25,12 @@ if (!isDev && cluster.isMaster) {
 } else {
   const app = express();
 
+  app.use(bodyParser.json({limit: "50mb"}));
+  app.use(bodyParser.urlencoded({
+    extended: true,
+    parameterLimit:500000
+  }));
+
   // Priority serve any static files.
   app.use(express.static(path.resolve(__dirname, '../react-ui/build')));
 
@@ -30,6 +39,9 @@ if (!isDev && cluster.isMaster) {
     res.set('Content-Type', 'application/json');
     res.send('{"message":"Hello from the custom server!"}');
   });
+
+  const routes = require('./routes/index');
+  app.use('/v1', routes(router));
 
   // All remaining requests return the React app, so it can handle routing.
   app.get('*', function(request, response) {
