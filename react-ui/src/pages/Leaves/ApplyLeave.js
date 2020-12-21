@@ -51,9 +51,9 @@ const ApplyLeave = (props) => {
 		})
 	}
 
-	useEffect(() => {
-		getLeaveTypes();
-	}, [getLeaveTypes]);
+	// useEffect(() => {
+	// 	getLeaveTypes();
+	// }, [getLeaveTypes]);
 
 	useEffect(() => {
 		setLeave(prevState => ({
