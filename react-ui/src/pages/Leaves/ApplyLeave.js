@@ -31,7 +31,7 @@ const ApplyLeave = (props) => {
 		mode: 'onBlur | onChange',
 		resolver: yupResolver(schema),
 	});
-	const { getLeaveTypes } = props;
+	//const { getLeaveTypes } = props;
 
 	let history = useHistory();
 	
