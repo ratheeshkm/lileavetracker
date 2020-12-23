@@ -35,7 +35,8 @@ export const getLeave = (data) => {
 	return(dispatch, getState) => {
 		let defer = Q.defer();
     dispatch(setLoading(true));
-    let data = {userid: getState().app.user.id }
+    let { id, type  } = getState().app.user;
+    let data = {userid: id, userType: type };
     axios
       .post('/v1/get-leave', data)
       .then((result) => {

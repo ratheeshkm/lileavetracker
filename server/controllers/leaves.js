@@ -29,12 +29,21 @@ module.exports = {
 	},
 	saveLeave: async(req, res) => {
 		let result = '';
-		const { leaveType, startDateFormatted, endDateFormatted, description, leaveCount, userid } = req.body;
+		const { leaveType, description, userid, leaves } = req.body;
+		let queryValues = "";
 		console.log(req.body)
+		const formatDate = date => {
+			let splitedDate = date.split("-");
+			return `${splitedDate[2]}-${splitedDate[1]}-${splitedDate[0]}`;
+		}
 		try {
 			const client = await pool.connect();
-			const result = await client.query(`INSERT INTO leave (type, startdate, enddate, description, status, leavecount, userid)
-			VALUES ( ${leaveType}, to_date('${startDateFormatted}', 'DD-MM-YYYY'), to_date('${endDateFormatted}', 'DD-MM-YYYY'), '${description}', 1, ${leaveCount}, ${userid})`);
+			for(let item of Object.entries(leaves)) {
+				let { startDate, endDate, leaveCount } = item[1];
+				queryValues += `(${leaveType}, to_date('${formatDate(startDate)}', 'DD-MM-YYYY'), to_date('${formatDate(endDate)}', 'DD-MM-YYYY'), '${description}', 1, ${leaveCount}, ${userid}),`;
+			}
+			queryValues = queryValues.slice(0, -1);
+			const result = await client.query(`INSERT INTO leave (type, startdate, enddate, description, status, leavecount, userid) VALUES ${queryValues}`);
 			if(result.rowCount) {
 				res.status(200).send("Success");
 			} else {
@@ -49,13 +58,18 @@ module.exports = {
 	getLeave : async(req, res) => {
 		let result = '';
 		console.log("req", req.body.userid)
+		let { userid, userType } = req.body;
 		try {
 			const client = await pool.connect();
-			const result = await client.query(`SELECT id, type, TO_CHAR(startdate :: DATE, 'DD-MM-YYYY') as startdate, 
+			let selectQuery = `SELECT id, type, TO_CHAR(startdate :: DATE, 'DD-MM-YYYY') as startdate, 
 			TO_CHAR(enddate :: DATE, 'DD-MM-YYYY') as enddate, description, status, leavecount 
-			FROM leave 
-			WHERE userid=${req.body.userid}
-			ORDER BY id DESC`);
+			FROM leave`;
+			if(userType === 'Employee') {
+				selectQuery = selectQuery + ` WHERE userid=${userid}`
+			}
+			selectQuery = selectQuery + ` ORDER BY id DESC`
+			console.log(selectQuery)
+			const result = await client.query(selectQuery);
 		  res.status(200).send(result.rows);
 			client.release();
     } catch (err) {

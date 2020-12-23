@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState, useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import { Row, Col, FormGroup, Label, Input, Button } from 'reactstrap';
 import AppHeader from '../../Layout/AppHeader';
@@ -25,13 +25,14 @@ const ApplyLeave = (props) => {
 		startDateFormatted: "",
 		endDateFormatted: "",
 		description: "",
-		leaveCount: 1
+		leaves:""
 	})
+
 	const { register, handleSubmit, setError, errors } = useForm({
 		mode: 'onBlur | onChange',
 		resolver: yupResolver(schema),
 	});
-	//const { getLeaveTypes } = props;
+	const { getLeaveTypes } = props;
 
 	let history = useHistory();
 	
@@ -51,9 +52,9 @@ const ApplyLeave = (props) => {
 		})
 	}
 
-	// useEffect(() => {
-	// 	getLeaveTypes();
-	// }, [getLeaveTypes]);
+	useEffect(() => {
+		getLeaveTypes();
+	}, [getLeaveTypes]);
 
 	useEffect(() => {
 		setLeave(prevState => ({
@@ -63,11 +64,101 @@ const ApplyLeave = (props) => {
 		}))
 	}, []);
 
+	const getMonthSplit = useCallback	(
+		(startDate, endDate) => {
+			let year = new Date(startDate).getFullYear();
+			let startMonth = new Date(startDate).getMonth();
+			let endMonth = new Date(endDate).getMonth();
+			let splitYear = [];
+			console.log(startMonth, endMonth)
+			for(let i=startMonth; i<=endMonth; i++) {
+				let split = "";
+				if(startMonth === endMonth) {
+					split = {
+						startDate: startDate,
+						endDate: endDate
+					}
+				} else if(i === startMonth) {
+					split = {
+						startDate: startDate,
+						endDate: formatDate(new Date(year, i + 1, 0).toLocaleDateString())
+					}
+				} else if(i === endMonth) {
+					split = {
+						startDate: formatDate(new Date(year, i, 1).toLocaleDateString()),
+						endDate: endDate
+					}
+				} else {
+					split = {
+						startDate: formatDate(new Date(year, i, 1).toLocaleDateString()),
+						endDate: formatDate(new Date(year, i + 1, 0).toLocaleDateString())
+					}
+				}
+				split.leaveCount = getBusinessDateCount(new Date(split.startDate), new Date(split.endDate));
+				splitYear.push(split);
+			}
+			return splitYear;
+		},
+		[],
+	);
+
+	const getYearSplit = useCallback	(
+		(startDate, endDate) => {
+			let startYear = new Date(startDate).getFullYear();
+		let endYear = new Date(endDate).getFullYear();
+		let splitYear = [];
+		for(let i = startYear; i <= endYear; i++ ) {
+			let split = ''
+			if(startYear === endYear) {
+				split = {
+					startDate: startDate,
+					endDate: endDate
+				}
+			} else if(i === startYear){
+				split = {
+					startDate: startDate,
+					endDate: formatDate(new Date(startYear, 11, 31).toLocaleDateString())
+				}
+			} else if(i === endYear) {
+				split = {
+					startDate: formatDate(new Date(i, 0, 1).toLocaleDateString()),
+					endDate: endDate
+				}
+			} else {
+				split = {
+					startDate: formatDate(new Date(i, 0, 1).toLocaleDateString()),
+					endDate: formatDate(new Date(i, 11, 31).toLocaleDateString())
+				}
+			}
+			split && splitYear.push(split);
+		}
+		return splitYear;
+		},
+		[],
+	);
+
+	
+	const splitLeaves = useCallback	(
+		(startDate, endDate) => {
+			let splitLeaves = getYearSplit(startDate, endDate).map(item => {
+				console.log(item.startDate, item.endDate);
+				return getMonthSplit(item.startDate, item.endDate);
+			});
+			let leaves = [];
+			for(let item of splitLeaves) {
+				leaves = [...leaves, ...item]
+			}
+			return leaves;
+		},
+		[getYearSplit, getMonthSplit],
+	);
+
+
 	useEffect(() => {
 		let startDateArray = document.getElementById("startDate").getAttribute('data-formattedvalue').split("-");
-		let startDate = `'${startDateArray[2]}-${startDateArray[1]}-${startDateArray[0]}'`;
+		let startDate = `${startDateArray[2]}-${startDateArray[1]}-${startDateArray[0]}`;
 		let endDateArray = document.getElementById("endDate").getAttribute('data-formattedvalue').split("-");
-		let endDate = `'${endDateArray[2]}-${endDateArray[1]}-${endDateArray[0]}'`;
+		let endDate = `${endDateArray[2]}-${endDateArray[1]}-${endDateArray[0]}`;
 		if(new Date(startDate).getTime() > new Date(endDate).getTime()) {
 			console.log("Start date greater than end date")
 			setError("startDate", {
@@ -85,11 +176,14 @@ const ApplyLeave = (props) => {
 			});
 			setLeave(prevState => ({
 				...prevState,
-				leaveCount: Math.floor(( Date.parse(endDate) - Date.parse(startDate) ) / 86400000) + 1
+				leaves:splitLeaves(startDate, endDate)
 			}))
+			//console.log(startDate, endDate)
+			//console.log(splitLeaves(startDate, endDate))
 		}
-	}, [leave.startDate, leave.endDate, setError]);
+	}, [leave.startDate, leave.endDate, setError, splitLeaves]);
 
+	
 	const handleChange = (e) => {
 		const { name, value } = e.currentTarget;
 		setLeave(prevState => ({
@@ -106,6 +200,44 @@ const ApplyLeave = (props) => {
 		}));
 	}
 	
+	function getBusinessDateCount (startDate, endDate) {
+			var elapsed, daysAfterLastSunday;
+			var ifThen = function (a, b, c) {
+					return a === b ? c : a;
+			};
+
+			elapsed = endDate - startDate;
+			elapsed /= 86400000;
+
+			let daysBeforeFirstSunday = (7 - startDate.getDay()) % 7;
+			daysAfterLastSunday = endDate.getDay();
+
+			elapsed -= (daysBeforeFirstSunday + daysAfterLastSunday);
+			elapsed = (elapsed / 7) * 5;
+			elapsed += ifThen(daysBeforeFirstSunday - 1, -1, 0) + ifThen(daysAfterLastSunday, 6, 5);
+
+			return Math.ceil(elapsed);
+	}
+
+	const formatDate = date => {
+		let splitedDate = date.split("/");
+		return `${splitedDate[2]}-${splitedDate[1]}-${splitedDate[0]}`;
+	}
+
+	// const getYearSplit = (startDate, endDate) => {
+	
+	// }
+
+	// const getMonthSplit = (startDate, endDate) => {
+	
+	// }
+
+	
+	// const splitLeaves = (startDate, endDate) => {
+		
+	// }
+
+	console.log("Leaves", leave)
 	return (
 		<Fragment>
 			<AppHeader />
