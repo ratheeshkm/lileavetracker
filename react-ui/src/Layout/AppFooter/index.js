@@ -38,7 +38,7 @@ class AppFooter extends React.Component {
                                     </a>
                                 </li>
                             </ul> */}
-														<footer> <small>&copy; Copyright 2020, RKM Corporation</small> </footer> 
+														<footer> <small>&copy; Copyright 2020</small> </footer> 
                         </div>
                     </div>
                 </div>

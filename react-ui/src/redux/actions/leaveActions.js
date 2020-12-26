@@ -1,4 +1,4 @@
-import { SET_LEAVE_TYPES, SET_LEAVE, SET_STATUS } from './types/leaveActionTypes';
+import { SET_LEAVE_TYPES, SET_LEAVE, SET_STATUS, SET_LEAVE_STATUS, SET_LEAVE_REPORT } from './types/leaveActionTypes';
 import { SET_LOADING } from './types/appActionTypes';
 import Q from 'q';
 import axios from 'axios';
@@ -24,6 +24,13 @@ export const setLeave = (leave) => {
 	}
 }
 
+export const setLeaveReport = (leaves) => {
+  return {
+		type: SET_LEAVE_REPORT,
+		leaves
+	}
+}
+
 export const setStatus = (status) => {
   return {
     type: SET_STATUS,
@@ -31,7 +38,14 @@ export const setStatus = (status) => {
   }
 }
 
-export const getLeave = (data) => {
+export const setLeaveStatus = (leaveStatus) => {
+  return {
+    type: SET_LEAVE_STATUS,
+    leaveStatus
+  }
+}
+
+export const getLeave = () => {
 	return(dispatch, getState) => {
 		let defer = Q.defer();
     dispatch(setLoading(true));
@@ -90,6 +104,25 @@ export const getLeaveTypes = (data) => {
 	}
 }
 
+export const getLeaveStatus = () => {
+  return(dispatch, getState) => {
+		let defer = Q.defer();
+    dispatch(setLoading(true));
+    axios
+      .get('/v1/get-leave-status')
+      .then((result) => {
+        defer.resolve(result.data);
+        dispatch(setLeaveStatus(result.data));
+        dispatch(setLoading(false));
+      })
+      .catch((error) => {
+        defer.resolve(error);
+        dispatch(setLoading(false));
+      });
+    return defer.promise;
+	}
+}
+
 export const saveLeave = (data) => {
   return(dispatch, getState) => {
     let defer = Q.defer();
@@ -109,3 +142,40 @@ export const saveLeave = (data) => {
   }
 }
 
+export const updateLeave = (data) => {
+  return function (dispatch) {
+    let defer = Q.defer();
+    dispatch(setLoading(true));
+    axios.post('/v1/update-leave', data)
+    .then(result => {
+      dispatch(setLoading(false));
+      dispatch(getLeave());
+      defer.promise(result);
+    })
+    .catch(error => {
+      defer.resolve(error);
+      dispatch(setLoading(false));
+    });
+    return defer.promise;
+  }
+}
+
+export const getLeaveReport = (data) => {
+  return(dispatch) => {
+		let defer = Q.defer();
+    dispatch(setLoading(true));
+    axios
+      .post('/v1/get-leave-report', data)
+      .then((result) => {
+        console.log(result.data)
+        dispatch(setLeaveReport(result.data));
+        dispatch(setLoading(false));
+        defer.resolve(result.data);
+      })
+      .catch((error) => {
+        defer.resolve(error);
+        dispatch(setLoading(false));
+      });
+    return defer.promise;
+	}
+}

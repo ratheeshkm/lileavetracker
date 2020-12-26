@@ -1,4 +1,9 @@
 export const ComponentsNav = [
+		{
+			icon: 'pe-7s-menu',
+			label: 'Dashboard',
+			to: '/dashboard'
+		},
     {
 			icon: 'pe-7s-menu',
 			label: 'Leave List',
@@ -6,12 +11,7 @@ export const ComponentsNav = [
     },
 		{
 			icon: 'pe-7s-menu',
-			label: 'Approve Leave',
-			to: '/approve-leave',
-		},
-		{
-			icon: 'pe-7s-menu',
-			label: 'Download Report',
-			to: '/download-report',
+			label: 'Report',
+			to: '/report',
 		}
 ];

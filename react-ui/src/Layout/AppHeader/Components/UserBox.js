@@ -19,7 +19,7 @@ import {
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
-import avatar1 from '../../../assets/utils/images/avatars/1.jpg';
+import avatar1 from '../../../assets/utils/images/avatars/user2.png';
 
 class UserBox extends React.Component {
     constructor(props) {
@@ -48,13 +48,13 @@ class UserBox extends React.Component {
                         <div className="widget-content-wrapper">
                             <div className="widget-content-left  ">
                                 <div className="widget-heading">
-                                    { this.props.restaurantName }
+                                    { this.props.user.name }
                                 </div>
                                 <div className="widget-subheading">
-                                    { this.props.country }
+                                    { this.props.user.company }
                                 </div>
                             </div>
-														<div className="widget-content-left ml-3 header-user-info">
+							<div className="widget-content-left ml-3 header-user-info">
                                 <UncontrolledButtonDropdown>
                                     <DropdownToggle color="link" className="p-0">
                                         <img width={42} className="rounded-circle" src={avatar1} alt=""/>

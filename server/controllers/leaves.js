@@ -27,11 +27,22 @@ module.exports = {
 			res.status(500).send(result);
     }
 	},
+	getLeaveStatus : async(req, res) => {
+		let result = '';
+		try {
+			const client = await pool.connect();
+			const result = await client.query(`SELECT id, name FROM "leave-status"`);
+		  res.status(200).send(result.rows);
+			client.release();
+    } catch (err) {
+		  result.error = err;
+			res.status(500).send(result);
+    }
+	},
 	saveLeave: async(req, res) => {
 		let result = '';
 		const { leaveType, description, userid, leaves } = req.body;
 		let queryValues = "";
-		console.log(req.body)
 		const formatDate = date => {
 			let splitedDate = date.split("-");
 			return `${splitedDate[2]}-${splitedDate[1]}-${splitedDate[0]}`;
@@ -57,7 +68,6 @@ module.exports = {
 	},
 	getLeave : async(req, res) => {
 		let result = '';
-		console.log("req", req.body.userid)
 		let { userid, userType } = req.body;
 		try {
 			const client = await pool.connect();
@@ -68,7 +78,23 @@ module.exports = {
 				selectQuery = selectQuery + ` WHERE userid=${userid}`
 			}
 			selectQuery = selectQuery + ` ORDER BY id DESC`
-			console.log(selectQuery)
+			const result = await client.query(selectQuery);
+		  res.status(200).send(result.rows);
+			client.release();
+    } catch (err) {
+		  result.error = err;
+			res.status(500).send(result);
+    }
+	},
+	getLeaveReport: async(req, res) => {
+		let result = '';
+		let { year, month } = req.body;
+		try {
+			const client = await pool.connect();
+			let selectQuery = `SELECT id, type, TO_CHAR(startdate :: DATE, 'DD-MM-YYYY') as startdate, 
+			TO_CHAR(enddate :: DATE, 'DD-MM-YYYY') as enddate, description, status, leavecount, userid
+			FROM leave WHERE EXTRACT(MONTH FROM enddate) = ${month} AND EXTRACT(YEAR FROM enddate) = ${year}`;
+			selectQuery = selectQuery + ` ORDER BY id ASC`
 			const result = await client.query(selectQuery);
 		  res.status(200).send(result.rows);
 			client.release();
@@ -89,5 +115,22 @@ module.exports = {
 			res.status(500).send(result);
     }
 	},
+	updateLeave: async(req, res) => {
+		let result = '';
+		try {
+			const client = await pool.connect();
+			const result = await client.query(`UPDATE leave SET status=${req.body.statusId} WHERE id=${req.body.leaveId}`);
+			console.log(result.rowCount)
+			if(result.rowCount) {
+				res.status(200).send('Success');
+			} else {
+				res.status(200).send('Error');
+			}
+			client.release();
+    } catch (err) {
+		  result.error = err;
+			res.status(500).send(result);
+    }
+	}
 }
 

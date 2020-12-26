@@ -12,12 +12,12 @@ import { v4 as uuidv4 } from 'uuid';
 var DatePicker = require("reactstrap-date-picker");
 
 const schema = yup.object().shape({
-	leaveType: yup.string().trim().required('Required'),
-	//startDate: yup.string().trim().required('Required'),
-	//endDate: yup.string().trim().required('Required'),
+	leaveType: yup.string().trim().required('Required')
 });
 
 const ApplyLeave = (props) => {
+	const { getLeaveTypes, leaveStatus } = props;
+	const leaves = props.leave;
 	const [ leave, setLeave ] = useState({
 		leaveType: "",
 		startDate: new Date().toISOString(),
@@ -32,11 +32,14 @@ const ApplyLeave = (props) => {
 		mode: 'onBlur | onChange',
 		resolver: yupResolver(schema),
 	});
-	const { getLeaveTypes } = props;
 
 	let history = useHistory();
 	
 	const onSubmit = async() => {
+		let formError = Object.keys(errors).filter(item => errors[item].message !== "")
+		if(formError.length) {
+			return false;
+		}
 		await props.saveLeave(leave)
 			.then((result) => {
 				if (result) {
@@ -70,7 +73,6 @@ const ApplyLeave = (props) => {
 			let startMonth = new Date(startDate).getMonth();
 			let endMonth = new Date(endDate).getMonth();
 			let splitYear = [];
-			console.log(startMonth, endMonth)
 			for(let i=startMonth; i<=endMonth; i++) {
 				let split = "";
 				if(startMonth === endMonth) {
@@ -137,11 +139,9 @@ const ApplyLeave = (props) => {
 		[],
 	);
 
-	
 	const splitLeaves = useCallback	(
 		(startDate, endDate) => {
 			let splitLeaves = getYearSplit(startDate, endDate).map(item => {
-				console.log(item.startDate, item.endDate);
 				return getMonthSplit(item.startDate, item.endDate);
 			});
 			let leaves = [];
@@ -153,24 +153,52 @@ const ApplyLeave = (props) => {
 		[getYearSplit, getMonthSplit],
 	);
 
+	const formatDate = date => {
+		let splitedDate = date.split("/");
+		return `${splitedDate[2]}-${splitedDate[1]}-${splitedDate[0]}`;
+	}
 
 	useEffect(() => {
 		let startDateArray = document.getElementById("startDate").getAttribute('data-formattedvalue').split("-");
 		let startDate = `${startDateArray[2]}-${startDateArray[1]}-${startDateArray[0]}`;
 		let endDateArray = document.getElementById("endDate").getAttribute('data-formattedvalue').split("-");
 		let endDate = `${endDateArray[2]}-${endDateArray[1]}-${endDateArray[0]}`;
-		if(new Date(startDate).getTime() > new Date(endDate).getTime()) {
-			console.log("Start date greater than end date")
-			setError("startDate", {
+		const appliedStatusId = leaveStatus.filter(item => item.name === 'Applied')[0].id;
+		const appliedLeaves = leaves.filter(item => item.status === appliedStatusId);
+		let dateError = false;
+		for(let value of appliedLeaves) {
+			let appliedStartDate = new Date(value.startdate.split("-").reverse().join("-")).getDate();
+			let appliedEndDate = new Date(value.enddate.split("-").reverse().join("-")).getDate();
+			if(
+				(new Date(startDate).getDate() <= appliedStartDate && appliedStartDate <= new Date(endDate).getDate()) ||
+				(new Date(startDate).getDate() <= appliedEndDate && appliedEndDate <= new Date(endDate).getDate())
+			) {
+				dateError = true;
+			}
+		}
+		if(dateError) {
+			setError("overlapError", {
 				type: "manual",
-				message: "Start date cannot be greated than end date"
+				message: "Applying date is overlapping with already applied leave"
+			});
+		} else {
+			setError("overlapError", {
+				type: "manual",
+				message: ""
+			});
+		}
+	
+		if(new Date(startDate).getTime() > new Date(endDate).getTime()) {
+			setError("dateGreaterError", {
+				type: "manual",
+				message: "Start date cannot be greater than end date"
 			});
 			setLeave(prevState => ({
 				...prevState,
 				leaveCount: 0
 			}))
 		} else {
-			setError("startDate", {
+			setError("dateGreaterError", {
 				type: "manual",
 				message: ""
 			});
@@ -178,11 +206,8 @@ const ApplyLeave = (props) => {
 				...prevState,
 				leaves:splitLeaves(startDate, endDate)
 			}))
-			//console.log(startDate, endDate)
-			//console.log(splitLeaves(startDate, endDate))
 		}
-	}, [leave.startDate, leave.endDate, setError, splitLeaves]);
-
+	}, [setError, splitLeaves, leave.startDate, leave.endDate, errors, leaveStatus, leaves]);
 	
 	const handleChange = (e) => {
 		const { name, value } = e.currentTarget;
@@ -218,26 +243,7 @@ const ApplyLeave = (props) => {
 
 			return Math.ceil(elapsed);
 	}
-
-	const formatDate = date => {
-		let splitedDate = date.split("/");
-		return `${splitedDate[2]}-${splitedDate[1]}-${splitedDate[0]}`;
-	}
-
-	// const getYearSplit = (startDate, endDate) => {
 	
-	// }
-
-	// const getMonthSplit = (startDate, endDate) => {
-	
-	// }
-
-	
-	// const splitLeaves = (startDate, endDate) => {
-		
-	// }
-
-	console.log("Leaves", leave)
 	return (
 		<Fragment>
 			<AppHeader />
@@ -282,6 +288,7 @@ const ApplyLeave = (props) => {
 											/>
 										<div className="text-danger">
 											{errors.startDate && errors.startDate.message}
+											{errors.dateGreaterError && <p>{errors.dateGreaterError.message}</p>}
 										</div>
 									</FormGroup>
 								</Col>
@@ -293,6 +300,7 @@ const ApplyLeave = (props) => {
 										<DatePicker id="endDate" name="endDate" value={leave.endDate} onChange= {(v,f) => handleDateChange(v, f, 'endDate')} dateFormat='DD-MM-YYYY'  />
 										<div className="text-danger">
 											{errors.endDate && errors.endDate.message}
+											{errors.overlapError && <p>{errors.overlapError.message}</p>}
 										</div>
 									</FormGroup>
 								</Col>
@@ -302,7 +310,7 @@ const ApplyLeave = (props) => {
 									<FormGroup>
 										<Label for="End Date">No of days on leave</Label>
 										<div>
-											{leave.leaveCount}
+											{leave.leaves.length >0 && leave.leaves[0].leaveCount}
 										</div>
 									</FormGroup>
 								</Col>

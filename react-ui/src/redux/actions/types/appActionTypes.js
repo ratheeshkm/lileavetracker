@@ -4,3 +4,4 @@ export const SET_LOG_OUT = "SET_LOG_OUT";
 export const RESET = "RESET";
 export const SET_LOGIN_STEP = "SET_LOGIN_STEP";
 export const SET_USER = "SET_USER";
+export const SET_USER_LIST = "SET_USER_LIST";

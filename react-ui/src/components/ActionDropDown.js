@@ -22,26 +22,31 @@ const ActionDropdown = (props) => {
 	};
 
 	return (
-		<Dropdown isOpen={dropdownOpen} toggle={toggle}>
-			<DropdownToggle color={'transparent'} onClick={e => e.stopPropagation()}>
-				<FontAwesomeIcon icon={faEllipsisH} />
-			</DropdownToggle>
-			<DropdownMenu>
-				{actions.map((item, index) => (
-					<DropdownItem
-						onClick={
-							item.callback
-								? () => handleCallback(item.callback)
-								: () => history.push(item.pathname)
-						}
-						className={item.className}
-						key={`dd-${index}`}
-					>
-						{item.title}
-					</DropdownItem>
-				))}
-			</DropdownMenu>
-		</Dropdown>
+		<div>
+			{actions.length > 0 && <Dropdown isOpen={dropdownOpen} toggle={toggle}>
+				<DropdownToggle color={'transparent'} onClick={e => e.stopPropagation()}>
+					<FontAwesomeIcon icon={faEllipsisH} />
+				</DropdownToggle>
+				<DropdownMenu>
+					{actions.map((item, index) => (
+						<DropdownItem
+							onClick={
+								item.callback
+									? () => handleCallback(item.callback)
+									: () => history.push(item.pathname)
+							}
+							className={item.className}
+							key={`dd-${index}`}
+						>
+							{item.title}
+						</DropdownItem>
+					))}
+				</DropdownMenu>
+			</Dropdown>
+			}
+			{actions.length <= 0  && "---" }
+			
+		</div>
 	);
 };
 

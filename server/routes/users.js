@@ -5,4 +5,6 @@ module.exports = (router) => {
     .post(controller.generatePassword);
   router.route('/password-login')
     .post(controller.passwordLogn)
+  router.route('/get-user-list')
+    .get(controller.getUserList)
 };

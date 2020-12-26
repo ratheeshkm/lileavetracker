@@ -1,13 +1,11 @@
 import { combineReducers } from "redux";
 import app from "./appReducer";
-import client from "./clientReducer";
 import ThemeOptions from '../../reducers/ThemeOptions';
 import leaves from './leaveReducer';
 
 const combinedReducer = combineReducers({
 	ThemeOptions,
 	app,
-	client,
 	leaves
 });
 

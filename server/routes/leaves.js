@@ -9,4 +9,10 @@ module.exports = (router) => {
     .post(controller.getLeave)
   router.route('/get-status')
     .get(controller.getStatus)
+  router.route('/get-leave-status')
+    .get(controller.getLeaveStatus)
+  router.route('/update-leave')
+    .post(controller.updateLeave)
+  router.route('/get-leave-report')
+    .post(controller.getLeaveReport)
 };

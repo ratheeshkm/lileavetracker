@@ -5,10 +5,12 @@ import { getLeaveTypes, saveLeave } from '../../redux/actions/leaveActions';
 
 const mapStateToProps = (state, ownProps) => {
   const { loading } = state.app;
-  const { leaveTypes } = state.leaves;
+  const { leaveTypes, leave, leaveStatus } = state.leaves;
 	return {
     loading,
-    leaveTypes
+    leaveTypes,
+    leave,
+    leaveStatus
 	};
 }
 

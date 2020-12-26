@@ -1,7 +1,9 @@
 const leaveInitialState = {
   leaveTypes: [],
   leave: [],
-  status: []
+  status: [],
+  leaveStatus: [],
+  leaveReports: []
 }
 
 export default leaveInitialState;

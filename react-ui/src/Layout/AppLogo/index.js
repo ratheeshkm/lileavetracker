@@ -47,7 +47,7 @@ class HeaderLogo extends React.Component {
         return (
             <Fragment>
                 <div className="app-header__logo">
-                    <div><a href="/"><b>LEAVE TRACKER</b></a></div>
+                    { !enableClosedSidebar && <div><a href="/"><b>LEAVE TRACKER</b></a></div> }
                     <div className="header__pane ml-auto">
                         <div onClick={this.toggleEnableClosedSidebar}>
                             <Hamburger

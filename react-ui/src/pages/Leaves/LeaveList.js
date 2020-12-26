@@ -9,7 +9,7 @@ import { formatColumn } from '../../components/FormatColumn';
 import ActionDropdown from '../../components/ActionDropDown';
 
 const ApplyLeave = (props) => {
-  const { leave, getLeave, leaveTypes, getStatus, getLeaveTypes, status } = props;
+  const { leave, user, getLeave, leaveTypes, getStatus, getLeaveTypes, status, updateLeave, leaveStatus, getLeaveStatus } = props;
 
   useEffect(() => {
 		getLeave();
@@ -20,14 +20,11 @@ const ApplyLeave = (props) => {
   }, [getStatus, status.length]);
 
   useEffect(() => {
-		getLeaveTypes();
-  }, [getLeaveTypes]);
+    getLeaveTypes();
+    getLeaveStatus();
+  }, [getLeaveStatus, getLeaveTypes]);
   
   if(!leave) return null;
-  console.log("leave-->", leave)
-  console.log("leaveTypes-->", leaveTypes)
-  console.log("status-->", status)
-  
 
   function startDateColumnFormatter(cell, row, rowIndex, formatExtraData) {
     let cellValue = formatColumn(cell, row, rowIndex, formatExtraData, 'type');
@@ -54,38 +51,61 @@ const ApplyLeave = (props) => {
     );
     return <span>{cellValue}</span>;
   }
-
+  
   const ActionColumn = (cell, row, rowIndex, formatExtraData) => {
 		if (!row) {
 			return null;
-		}
+    }
+    const dropdownList = {
+      "Employee": {
+        "Applied": [
+          {
+            callback: () => {
+              formatExtraData.callback(row, "Cancel")
+            },
+            title: "Cancel",
+            className: 'link-gray'
+          }
+        ],
+        "Canceled": []
+      },
+      "Approver": {
+        "Applied": [
+          {
+            callback: () => {
+              formatExtraData.callback(row, "Approve")
+            },
+            title: "Approve",
+            className: 'link-gray'
+          },
+          {
+            callback: () => {
+              formatExtraData.callback(row, "Reject")
+            },
+            title: "Reject",
+            className: 'link-gray'
+          }
+        ],
+        "Approved": [
+          {
+            callback: () => {
+              formatExtraData.callback(row, "Reject")
+            },
+            title: "Reject",
+            className: 'link-gray'
+          }
+        ],
+        "Rejected": []
+      }
+    }
+    const getActionList = (employeeType, leaveStatus) => {
+      return dropdownList[employeeType][leaveStatus];
+    }
+    const leaveStatusFilter = leaveStatus.filter(item => item.id === row.status)
+    let actionDropDowns = getActionList(user.type, leaveStatusFilter && leaveStatusFilter[0].name);
 		return (
 			<Fragment>
-				<ActionDropdown
-					actions={[
-						{
-							callback: () => {
-								formatExtraData.callback(row, "Cancel")
-							},
-							title: "Cancel",
-							className: 'link-gray'
-						},
-            {
-							callback: () => {
-								formatExtraData.callback(row, "Approve")
-							},
-							title: "Approve",
-							className: 'link-gray'
-						},
-            {
-							callback: () => {
-								formatExtraData.callback(row, "Reject")
-							},
-							title: "Reject",
-							className: 'link-gray'
-						}
-					]}
-				/>
+				<ActionDropdown actions={actionDropDowns} />
 			</Fragment>
 		);
 	}
@@ -159,6 +179,7 @@ const ApplyLeave = (props) => {
     },
   ];
 
+  
   return (
     <Fragment>
       <Row>
@@ -183,10 +204,7 @@ const ApplyLeave = (props) => {
           </div>
         </Col>
       </Row>
-      <TableList columns={columns} data={leave}
-        //update={updateCategories}
-        //delete={deleteCategories}
-      />
+      <TableList columns={columns} data={leave} updateLeave={updateLeave} leaveStatus={leaveStatus} />
     </Fragment>
   );
 };

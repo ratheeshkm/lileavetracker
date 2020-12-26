@@ -1,4 +1,4 @@
-import { SET_LEAVE_TYPES, SET_LEAVE, SET_STATUS } from '../actions/types/leaveActionTypes';
+import { SET_LEAVE_TYPES, SET_LEAVE, SET_STATUS, SET_LEAVE_STATUS, SET_LEAVE_REPORT } from '../actions/types/leaveActionTypes';
 import leaveinitialStates from './initialStates/leaveinitialStates';
 
 const appReducer = (state = leaveinitialStates, action) => {
@@ -13,10 +13,20 @@ const appReducer = (state = leaveinitialStates, action) => {
 				...state,
 				leave: action.leave
 			}
+		case SET_LEAVE_REPORT:
+			return {
+				...state,
+				leaveReport: action.leaves
+			}
 		case SET_STATUS:
 			return {
 				...state,
 				status: action.status
+			}
+		case SET_LEAVE_STATUS:
+			return {
+				...state,
+				leaveStatus: action.leaveStatus
 			}
 		default:
 			return state;

@@ -2,7 +2,8 @@ const appInitialState = {
 	loading: false,
 	loggedIn: false,
 	loginStep: 'generatePassword',
-	user:[]
+	user:[],
+	userList: []
 }
 
 export default appInitialState;

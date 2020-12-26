@@ -4,10 +4,9 @@ import { withRouter } from "react-router";
 import { setLoading, setLogout, reset } from '../../../redux/actions/appActions';
 
 const mapStateToPros = (state, ownProps) => {
-	const { restaurantName, country } = state.client;
+	const { user } = state.app;
 	return {
-		restaurantName,
-		country
+		user
 	}
 }
 

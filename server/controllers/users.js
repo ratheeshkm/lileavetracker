@@ -113,6 +113,19 @@ module.exports = {
 		  result.error = err;
 			res.status(500).send(result);
     }
+	},
+	getUserList: async(req, res) => {
+		let result = '';
+		try {
+			const client = await pool.connect();
+			let selectQuery = `SELECT id, name, email, company, location FROM user_table`;
+			const result = await client.query(selectQuery);
+		  res.status(200).send(result.rows);
+			client.release();
+    } catch (err) {
+		  result.error = err;
+			res.status(500).send(result);
+    }
 	}
 }
 

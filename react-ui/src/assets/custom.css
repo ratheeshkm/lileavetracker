@@ -1,5 +1,5 @@
 .pagination {
-	justify-content: flex-end;
+  justify-content: flex-end;
 }
 
 .react-bootstrap-table th[data-row-selection] {
@@ -7,48 +7,49 @@
 }
 
 .selection-row {
-	background-color: '#c8e6c9';
+  background-color: '#c8e6c9';
 }
 
 .action-buttons {
-	margin-left: 15px;
-	float: right;
+  margin-left: 15px;
+  float: right;
 }
 
 .table-action {
-	width: 10%;
-	text-align: center;
+  width: 10%;
+  text-align: center;
 }
 
 .add-restaurant-details {
-	margin-top: 50px;
+  margin-top: 50px;
 }
 
 .nav-link.active {
-	background-color: #d1f3ff;
+  background-color: #d1f3ff;
   font-weight: bold;
 }
 
 .nav.flex-column {
-	border: solid 1px;
+  border: solid 1px;
 }
 
-.nav .active, #categorisList .active{
-	background-color: #d1f3ff;
-	font-weight: bold;
+.nav .active,
+#categorisList .active {
+  background-color: #d1f3ff;
+  font-weight: bold;
 }
 
 .nav-item.nav-item-header {
-	font-size: 1.0rem;
-	font-weight: normal;
+  font-size: 1rem;
+  font-weight: normal;
 }
 
 .child {
-	margin-left: 10px
+  margin-left: 10px;
 }
 
 #categorisList .nav-link {
-	margin-left: 10px
+  margin-left: 10px;
 }
 
 .modal {
@@ -86,24 +87,24 @@
 }
 
 #paymentType div {
-	margin: 10px 0px;
+  margin: 10px 0px;
 }
 
 .no-orders {
-	margin: 0 auto;
+  margin: 0 auto;
   padding-top: 15px;
   font-weight: bold;
 }
 
 .app-header-right .nav.flex-column {
-	border: none;
+  border: none;
 }
 
 .input-group {
   clear: both;
   margin: 0px;
-	position: relative;
-	margin-top: -3px;
+  position: relative;
+  margin-top: -3px;
 }
 
 .input-group input[type='button'] {
@@ -142,6 +143,11 @@
 input[type='number'] {
   -moz-appearance: textfield;
   -webkit-appearance: none;
+}
+
+#pageDropDown {
+  color: #007bff;
+  background: white;
 }
 
 /* Input add minus button css */

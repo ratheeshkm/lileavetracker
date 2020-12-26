@@ -5,7 +5,7 @@ import { ToastContainer } from 'react-toastify';
 const Dashborad = lazy(() => import('../../pages/Dashborad/DashboardContainer'));
 const Leaves = lazy(() => import('../../pages/Leaves/Leaves'));
 const ApplyLeave = lazy(() => import('../../pages/Leaves/ApplyLeaveContainer'));
-
+const Report = lazy(() => import('../../pages/Report/ReportContainer'))
 const Login  = lazy(() => import('../../pages/Login/LoginContainer'));
 
 // A wrapper for <Route> that redirects to the login
@@ -45,6 +45,9 @@ const AppMain = (props) => {
 							</PrivateRoute>
               <PrivateRoute exact path="/apply-leave" {...props}>
 								<ApplyLeave />
+							</PrivateRoute>
+              <PrivateRoute exact path="/report" {...props}>
+								<Report />
 							</PrivateRoute>
 							<Route exact path="/" component={Login} />
 						</Switch>

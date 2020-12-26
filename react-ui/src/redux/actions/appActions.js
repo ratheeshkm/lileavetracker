@@ -1,4 +1,4 @@
-import { SET_LOADING, SET_LOGGED_IN, SET_LOG_OUT, SET_LOGIN_STEP, SET_USER, RESET } from './types/appActionTypes';
+import { SET_LOADING, SET_LOGGED_IN, SET_LOG_OUT, SET_LOGIN_STEP, SET_USER, SET_USER_LIST, RESET } from './types/appActionTypes';
 import Q from 'q';
 import axios from 'axios';
 
@@ -84,4 +84,26 @@ export const passwordLogin = (data) => {
 	}
 }
 
+export const setUserList = (userList) => {
+	return {
+		type: SET_USER_LIST,
+		userList
+	}
+}
+
+export const getUserList = () => {
+	return (dispatch) => {
+		let defer = Q.defer();
+		axios.get("/v1/get-user-list")
+		.then((result) => {
+			console.log(result)
+			dispatch(setUserList(result.data));
+		})
+		.catch((error) => {
+			console.log("Error", error);
+			defer.resolve(error);
+		})
+		return defer.promise;
+	}
+}
 

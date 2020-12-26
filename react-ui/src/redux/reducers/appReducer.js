@@ -1,4 +1,4 @@
-import { SET_LOADING, SET_LOGGED_IN, SET_LOG_OUT, SET_LOGIN_STEP, SET_USER } from '../actions/types/appActionTypes';
+import { SET_LOADING, SET_LOGGED_IN, SET_LOG_OUT, SET_LOGIN_STEP, SET_USER, SET_USER_LIST} from '../actions/types/appActionTypes';
 import appInitialState from './initialStates/appInitialStates';
 
 const appReducer = (state = appInitialState, action) => {
@@ -27,6 +27,11 @@ const appReducer = (state = appInitialState, action) => {
 			return {
 				...state,
 				user:  action.user
+			}
+		case SET_USER_LIST:
+			return {
+				...state,
+				userList:  action.userList
 			}
 		default:
 			return state;

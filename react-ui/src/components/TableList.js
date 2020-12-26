@@ -10,6 +10,7 @@ import { Row, Col, Card, CardBody } from 'reactstrap';
 import { toast, Bounce } from 'react-toastify';
 import { Button } from 'reactstrap';
 import ActionDropdown from './ActionDropDown';
+import confirm from "reactstrap-confirm";
 
 const TableList = (props) => {
 	let { columns, data } = props;
@@ -77,7 +78,8 @@ const TableList = (props) => {
 		}
 	}
 
-	const handleRowAction = (row, action) => {
+
+	const handleRowAction = async (row, action) => {
 		if (action === 'Delete') {
 			if (editedRows.length) {
 				let existingItem = editedRows.filter(item => (item.rowId === row.id));
@@ -110,6 +112,36 @@ const TableList = (props) => {
 			const updatedRows = editedRows.map(item => (item.rowId === row.id) ? { ...item, action: ''} : item);
 			setEditedRows(updatedRows)
 		}
+
+		console.log(action)
+		console.log("row", row)
+		if(action === 'Cancel' || action === 'Approve' || action === 'Reject') {
+			let actionItem = props.leaveStatus.filter(item => {
+				let actionName = (action === 'Approve') ? `${action}d` : `${action}ed`;
+				return item.name === actionName;
+			});
+			let result = await confirm({
+				title: (
+						<>
+								Confirm
+						</>
+				),
+				message: `Are you sure to ${action.toLowerCase()} the leave?`,
+				confirmText: "OK",
+				confirmColor: "primary",
+				cancelColor: "link text-danger"
+			});
+			if(result) {
+				let actionData = {
+					leaveId: row.id,
+					statusId: actionItem[0].id
+				}
+				props.updateLeave(actionData);
+			}
+		}
+		// If cancel
+		// If approve
+		// If reject
 	}
 
 	const handleValidator = (newValue, row, column) => {
