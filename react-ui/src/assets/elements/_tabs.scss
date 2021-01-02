@@ -15,7 +15,6 @@
 
 .nav-tabs {
   .nav-link {
-
     &:hover {
       color: $primary !important;
     }
@@ -28,7 +27,6 @@
 
 .nav-pills {
   .nav-link {
-
     &:hover {
       color: $primary !important;
     }
@@ -64,7 +62,7 @@
   z-index: 1;
   white-space: nowrap;
   padding: $nav-link-padding-y $nav-link-padding-x;
-  transition: all .2s;
+  transition: all 0.2s;
 
   &:hover {
     color: $primary;
@@ -133,7 +131,6 @@
 
   &:focus {
     outline: none;
-
   }
 }
 
@@ -149,8 +146,7 @@
 
 .RRT__showmore--selected {
   box-shadow: 0 16px 26px -10px rgba($primary, 0.56),
-  0 4px 25px 0px rgba(0, 0, 0, 0.12),
-  0 8px 10px -5px rgba($primary, 0.2);
+    0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba($primary, 0.2);
 }
 
 .RRT__showmore-list {

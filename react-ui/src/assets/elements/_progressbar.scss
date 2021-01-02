@@ -1,7 +1,6 @@
 // Progress Bar
 
 .progress {
-
   .progress-bar {
     &:last-child {
       @include border-right-radius($progress-border-radius);
@@ -9,17 +8,16 @@
   }
 
   &.progress-bar-sm {
-    height: .5rem;
+    height: 0.5rem;
   }
 
   &.progress-bar-xs {
-    height: .3rem;
+    height: 0.3rem;
   }
 
   &.progress-bar-rounded {
     @include border-radius(30px);
   }
-
 }
 
 .progress-bar-animated-alt {
@@ -28,7 +26,7 @@
     position: relative;
 
     &::after {
-      content: '';
+      content: "";
       opacity: 0;
       position: absolute;
       top: 0;
@@ -43,11 +41,11 @@
 
 @keyframes progress-active {
   0% {
-    opacity: .4;
-    width: 0
+    opacity: 0.4;
+    width: 0;
   }
   100% {
     opacity: 0;
-    width: 100%
+    width: 100%;
   }
 }

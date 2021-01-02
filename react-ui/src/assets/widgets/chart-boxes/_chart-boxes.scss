@@ -21,7 +21,7 @@ $widget-spacer: $spacer;
   }
 
   .widget-chart-content-lg {
-    padding: ($widget-spacer * 2) 0 $widget-spacer  ($widget-spacer * 2);
+    padding: ($widget-spacer * 2) 0 $widget-spacer ($widget-spacer * 2);
 
     .widget-numbers {
       margin-bottom: 0;
@@ -33,7 +33,7 @@ $widget-spacer: $spacer;
     bottom: 0;
     left: 0;
     width: 100%;
-    opacity: .25;
+    opacity: 0.25;
     z-index: 6;
     @include border-bottom-radius($card-border-radius);
     overflow: hidden;
@@ -55,7 +55,7 @@ $widget-spacer: $spacer;
   .widget-subheading {
     margin: -0.5rem 0 0;
     display: block;
-    opacity: .6;
+    opacity: 0.6;
 
     &:first-child {
       margin-top: 0;
@@ -80,7 +80,7 @@ $widget-spacer: $spacer;
       font-size: 1.1rem;
       padding-top: 0;
       padding-bottom: 0;
-      opacity: .6;
+      opacity: 0.6;
     }
   }
 
@@ -101,7 +101,7 @@ $widget-spacer: $spacer;
     font-size: 1.1rem;
     padding-top: 0;
     padding-bottom: 0;
-    opacity: .6;
+    opacity: 0.6;
   }
 }
 
@@ -141,12 +141,11 @@ $widget-spacer: $spacer;
     height: 100%;
     width: 100%;
     z-index: 3;
-    opacity: .2;
+    opacity: 0.2;
 
     &.bg-light {
-      opacity: .08;
+      opacity: 0.08;
     }
-
   }
 
   i {

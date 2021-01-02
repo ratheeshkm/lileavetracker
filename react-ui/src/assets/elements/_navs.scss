@@ -17,7 +17,7 @@
     font-size: 1rem;
     width: 30px;
     text-align: center;
-    opacity: .45;
+    opacity: 0.45;
     margin-left: -10px;
   }
 
@@ -25,7 +25,7 @@
     color: $gray-700;
 
     .nav-link-icon {
-      opacity: .9;
+      opacity: 0.9;
       color: $primary;
     }
   }
@@ -33,7 +33,7 @@
   &:disabled,
   &.disabled {
     .nav-link-icon {
-      opacity: .3;
+      opacity: 0.3;
     }
   }
 }
@@ -67,14 +67,13 @@
 
 .nav-pills {
   .nav-link {
-
     &.active,
     &.active:hover {
       color: $white;
 
       .nav-link-icon {
         color: $white;
-        opacity: .8;
+        opacity: 0.8;
       }
     }
 
@@ -83,4 +82,3 @@
     }
   }
 }
-

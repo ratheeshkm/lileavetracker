@@ -1,15 +1,15 @@
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 import AppMain from './AppMain';
-import { withRouter } from "react-router";
+
 const mapStateToPros = (state, ownProps) => {
-  const  { loading, loggedIn } = state.app;
+  const { loading, loggedIn } = state.app;
   return {
     loading,
     loggedIn
-  }
-}
+  };
+};
 
-const actionCreators = {
-}
+const actionCreators = {};
 
 export default withRouter(connect(mapStateToPros, actionCreators)(AppMain));

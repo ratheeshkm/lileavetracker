@@ -1,22 +1,24 @@
 import { connect } from 'react-redux';
 import Dashborad from './Dashboard';
 import { getUserList } from '../../redux/actions/appActions';
-import { getLeave, getLeaveStatus } from '../../redux/actions/leaveActions';
+import { getLeave, getStatus, getLeaveTypes } from '../../redux/actions/leaveActions';
 
 const mapStateToProps = (state) => {
-	const { userList } = state.app;
-	const { leave, status } = state.leaves;
-	return {
-		userList,
-		leave,
-		status
-	};
-}
+  const { userList } = state.app;
+  const { leave, status, leaveTypes } = state.leaves;
+  return {
+    userList,
+    leave,
+    status,
+    leaveTypes
+  };
+};
 
 const actionCreaters = {
-	getUserList,
-	getLeave,
-	getLeaveStatus
-}
+  getUserList,
+  getLeave,
+  getStatus,
+  getLeaveTypes
+};
 
 export default connect(mapStateToProps, actionCreaters)(Dashborad);

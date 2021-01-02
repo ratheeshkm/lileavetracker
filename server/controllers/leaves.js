@@ -88,13 +88,16 @@ module.exports = {
 	},
 	getLeaveReport: async(req, res) => {
 		let result = '';
-		let { year, month } = req.body;
+		let { year, month, userid, userType } = req.body;
 		try {
 			const client = await pool.connect();
 			let selectQuery = `SELECT id, type, TO_CHAR(startdate :: DATE, 'DD-MM-YYYY') as startdate, 
 			TO_CHAR(enddate :: DATE, 'DD-MM-YYYY') as enddate, description, status, leavecount, userid
 			FROM leave WHERE EXTRACT(MONTH FROM enddate) = ${month} AND EXTRACT(YEAR FROM enddate) = ${year}`;
-			selectQuery = selectQuery + ` ORDER BY id ASC`
+			if(userType === 'Employee') {
+				selectQuery = selectQuery + ` AND userid=${userid}`
+			}
+			selectQuery = selectQuery + ` ORDER BY id ASC`;
 			const result = await client.query(selectQuery);
 		  res.status(200).send(result.rows);
 			client.release();
@@ -120,7 +123,6 @@ module.exports = {
 		try {
 			const client = await pool.connect();
 			const result = await client.query(`UPDATE leave SET status=${req.body.statusId} WHERE id=${req.body.leaveId}`);
-			console.log(result.rowCount)
 			if(result.rowCount) {
 				res.status(200).send('Success');
 			} else {

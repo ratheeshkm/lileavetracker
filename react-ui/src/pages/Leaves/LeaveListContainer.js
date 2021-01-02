@@ -1,8 +1,14 @@
 import { connect } from 'react-redux';
-import ApplyLeave from './LeaveList';
 import { withRouter } from 'react-router';
+import ApplyLeave from './LeaveList';
 import { setLoading } from '../../redux/actions/appActions';
-import { getLeave, getStatus, getLeaveTypes, updateLeave, getLeaveStatus } from '../../redux/actions/leaveActions';
+import {
+  getLeave,
+  getStatus,
+  getLeaveTypes,
+  updateLeave,
+  getLeaveStatus
+} from '../../redux/actions/leaveActions';
 
 const mapStateToProps = (state) => {
   const { loading, user } = state.app;
@@ -26,6 +32,4 @@ const actionCreaters = {
   getLeaveStatus
 };
 
-export default withRouter(
-  connect(mapStateToProps, actionCreaters)(ApplyLeave)
-);
+export default withRouter(connect(mapStateToProps, actionCreaters)(ApplyLeave));

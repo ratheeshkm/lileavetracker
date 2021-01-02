@@ -1,48 +1,77 @@
-import React, { Fragment, useEffect } from 'react';
-import { Row, Col } from 'reactstrap';
-import PageTitle from '../../Layout/AppMain/PageTitle';
-import { Button } from 'reactstrap';
-import TableList from '../../components/TableList';
+import React, { useEffect } from 'react';
+import { Row, Col, Button } from 'reactstrap';
+
 import { Link } from 'react-router-dom';
 import cx from 'classnames';
+import PageTitle from '../../Layout/AppMain/PageTitle';
+import TableList from '../../components/TableList';
 import { formatColumn } from '../../components/FormatColumn';
 import ActionDropdown from '../../components/ActionDropDown';
 
 const ApplyLeave = (props) => {
-  const { leave, user, getLeave, leaveTypes, getStatus, getLeaveTypes, status, updateLeave, leaveStatus, getLeaveStatus } = props;
+  const {
+    leave,
+    user,
+    getLeave,
+    leaveTypes,
+    getStatus,
+    getLeaveTypes,
+    status,
+    updateLeave,
+    leaveStatus,
+    getLeaveStatus
+  } = props;
 
   useEffect(() => {
-		getLeave();
+    getLeave();
   }, [getLeave]);
 
   useEffect(() => {
-		getStatus();
+    getStatus();
   }, [getStatus, status.length]);
 
   useEffect(() => {
     getLeaveTypes();
     getLeaveStatus();
   }, [getLeaveStatus, getLeaveTypes]);
-  
-  if(!leave) return null;
+
+  if (!leave) return null;
 
   function startDateColumnFormatter(cell, row, rowIndex, formatExtraData) {
-    let cellValue = formatColumn(cell, row, rowIndex, formatExtraData, 'type');
+    const cellValue = formatColumn(
+      cell,
+      row,
+      rowIndex,
+      formatExtraData,
+      'type'
+    );
     return <span>{cellValue}</span>;
   }
 
   function endDateColumnFormatter(cell, row, rowIndex, formatExtraData) {
-    let cellValue = formatColumn(cell, row, rowIndex, formatExtraData, 'type');
+    const cellValue = formatColumn(
+      cell,
+      row,
+      rowIndex,
+      formatExtraData,
+      'type'
+    );
     return <span>{cellValue}</span>;
   }
 
   function countColumnFormatter(cell, row, rowIndex, formatExtraData) {
-    let cellValue = formatColumn(cell, row, rowIndex, formatExtraData, 'status');
+    const cellValue = formatColumn(
+      cell,
+      row,
+      rowIndex,
+      formatExtraData,
+      'status'
+    );
     return <span>{cellValue}</span>;
   }
 
   function descriptionColumnFormatter(cell, row, rowIndex, formatExtraData) {
-    let cellValue = formatColumn(
+    const cellValue = formatColumn(
       cell,
       row,
       rowIndex,
@@ -51,79 +80,92 @@ const ApplyLeave = (props) => {
     );
     return <span>{cellValue}</span>;
   }
-  
+
   const ActionColumn = (cell, row, rowIndex, formatExtraData) => {
-		if (!row) {
-			return null;
+    if (!row) {
+      return null;
     }
     const dropdownList = {
-      "Employee": {
-        "Applied": [
+      Employee: {
+        Applied: [
           {
             callback: () => {
-              formatExtraData.callback(row, "Cancel")
+              formatExtraData.callback(row, 'Cancel');
             },
-            title: "Cancel",
+            title: 'Cancel',
             className: 'link-gray'
           }
         ],
-        "Canceled": []
+        Canceled: []
       },
-      "Approver": {
-        "Applied": [
+      Approver: {
+        Applied: [
           {
             callback: () => {
-              formatExtraData.callback(row, "Approve")
+              formatExtraData.callback(row, 'Approve');
             },
-            title: "Approve",
+            title: 'Approve',
             className: 'link-gray'
           },
           {
             callback: () => {
-              formatExtraData.callback(row, "Reject")
+              formatExtraData.callback(row, 'Reject');
             },
-            title: "Reject",
+            title: 'Reject',
             className: 'link-gray'
           }
         ],
-        "Approved": [
+        Approved: [
           {
             callback: () => {
-              formatExtraData.callback(row, "Reject")
+              formatExtraData.callback(row, 'Reject');
             },
-            title: "Reject",
+            title: 'Reject',
             className: 'link-gray'
           }
         ],
-        "Rejected": []
+        Rejected: []
       }
-    }
+    };
     const getActionList = (employeeType, leaveStatus) => {
       return dropdownList[employeeType][leaveStatus];
-    }
-    const leaveStatusFilter = leaveStatus.filter(item => item.id === row.status)
-    let actionDropDowns = getActionList(user.type, leaveStatusFilter && leaveStatusFilter[0].name);
-		return (
-			<Fragment>
-				<ActionDropdown actions={actionDropDowns} />
-			</Fragment>
-		);
-	}
+    };
+    const leaveStatusFilter = leaveStatus.filter(
+      (item) => item.id === row.status
+    );
+    const actionDropDowns = getActionList(
+      user.type,
+      leaveStatusFilter.length && leaveStatusFilter[0].name
+    );
+    return (
+      <>
+        <ActionDropdown actions={actionDropDowns} />
+      </>
+    );
+  };
 
   const columns = [
     {
       dataField: 'id',
       text: 'ID',
       hidden: true,
-      searchable: false,
+      searchable: false
     },
     {
       dataField: 'type',
       text: 'Leave Type',
       sort: true,
       formatter: (cell, row, rowIndex, formatExtraData) => {
-				return formatColumn(cell, row, rowIndex, formatExtraData, 'type', leaveTypes, 'name');
-			},
+        return formatColumn(
+          cell,
+          row,
+          rowIndex,
+          formatExtraData,
+          'type',
+          leaveTypes,
+          'name'
+        );
+      },
       editable: false
     },
     {
@@ -159,8 +201,16 @@ const ApplyLeave = (props) => {
       text: 'Status',
       sort: true,
       formatter: (cell, row, rowIndex, formatExtraData) => {
-				return formatColumn(cell, row, rowIndex, formatExtraData, 'status', status, 'name');
-			},
+        return formatColumn(
+          cell,
+          row,
+          rowIndex,
+          formatExtraData,
+          'status',
+          status,
+          'name'
+        );
+      },
       editable: false
     },
     {
@@ -176,12 +226,11 @@ const ApplyLeave = (props) => {
         return { width: '15%', textAlign: 'center' };
       },
       formatter: ActionColumn
-    },
+    }
   ];
 
-  
   return (
-    <Fragment>
+    <>
       <Row>
         <Col lg="8">
           <PageTitle
@@ -196,16 +245,23 @@ const ApplyLeave = (props) => {
               <div
                 className={cx('page-title-icon')}
                 style={{ boxShadow: '0 0 black', background: 'none' }}
-              ></div>
+              />
               <div className="page-title-actions">
-                <Link to="/apply-leave"><Button color="primary">Apply Leave</Button></Link>
+                <Link to="/apply-leave">
+                  <Button color="primary">Apply Leave</Button>
+                </Link>
               </div>
             </div>
           </div>
         </Col>
       </Row>
-      <TableList columns={columns} data={leave} updateLeave={updateLeave} leaveStatus={leaveStatus} />
-    </Fragment>
+      <TableList
+        columns={columns}
+        data={leave}
+        updateLeave={updateLeave}
+        leaveStatus={leaveStatus}
+      />
+    </>
   );
 };
 

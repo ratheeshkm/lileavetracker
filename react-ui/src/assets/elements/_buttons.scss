@@ -6,7 +6,7 @@
   &::after {
     position: relative;
     top: 2px;
-    opacity: .8;
+    opacity: 0.8;
   }
 }
 
@@ -19,7 +19,7 @@
 }
 
 .dropdown-toggle-split {
-  border-left: rgba(255, 255, 255, .1) solid 1px;
+  border-left: rgba(255, 255, 255, 0.1) solid 1px;
 }
 
 // Links
@@ -32,13 +32,15 @@ $link-hover-color: darken($link-color, 15%);
     @include button-outline-variant($value);
 
     &.btn-shadow {
-      box-shadow: 0 0.125rem 0.625rem rgba($value, .4), 0 0.0625rem 0.125rem rgba($value, .5);
+      box-shadow: 0 0.125rem 0.625rem rgba($value, 0.4),
+        0 0.0625rem 0.125rem rgba($value, 0.5);
 
       &.active:hover,
       &.disabled:hover,
       &:active:hover,
       &:disabled:hover {
-        box-shadow: 0 0.125rem 0.625rem rgba($value, .5), 0 0.0625rem 0.125rem rgba($value, .6);
+        box-shadow: 0 0.125rem 0.625rem rgba($value, 0.5),
+          0 0.0625rem 0.125rem rgba($value, 0.6);
       }
 
       &:hover {

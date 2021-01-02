@@ -1,7 +1,14 @@
 import { connect } from 'react-redux';
 import Report from './Report';
 import { setLoading } from '../../redux/actions/appActions';
-import { getLeave, getStatus, getLeaveTypes, updateLeave, getLeaveStatus, getLeaveReport } from '../../redux/actions/leaveActions';
+import {
+  getLeave,
+  getStatus,
+  getLeaveTypes,
+  updateLeave,
+  getLeaveStatus,
+  getLeaveReport
+} from '../../redux/actions/leaveActions';
 
 const mapStateToProps = (state) => {
   const { loading, user, userList } = state.app;
@@ -28,4 +35,4 @@ const actionCreaters = {
   getLeaveReport
 };
 
-export default connect(mapStateToProps, actionCreaters)(Report)
+export default connect(mapStateToProps, actionCreaters)(Report);

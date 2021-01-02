@@ -3,7 +3,7 @@
 .popover,
 .tooltip {
   opacity: 0;
-  transition: opacity .2s ease;
+  transition: opacity 0.2s ease;
 
   &.show {
     opacity: 1;
@@ -64,7 +64,7 @@
   }
 
   .popover-header {
-    background: rgba(255, 255, 255, .1);
+    background: rgba(255, 255, 255, 0.1);
     border-bottom: 0;
     color: rgba(255, 255, 255, 1);
 
@@ -74,16 +74,16 @@
   }
 
   .popover-body {
-    color: rgba(255, 255, 255, .7);
+    color: rgba(255, 255, 255, 0.7);
   }
 
   &.text-dark {
     .popover-header {
-      color: rgba(0, 0, 0, .8);
+      color: rgba(0, 0, 0, 0.8);
     }
 
     .popover-body {
-      color: rgba(0, 0, 0, .7);
+      color: rgba(0, 0, 0, 0.7);
     }
   }
 }

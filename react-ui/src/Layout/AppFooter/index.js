@@ -1,15 +1,13 @@
-import React, {Fragment} from 'react';
+import React from 'react';
 
 class AppFooter extends React.Component {
-    render() {
-
-
-        return (
-            <Fragment>
-                <div className="app-footer">
-                    <div className="app-footer__inner">
-                        <div className="app-footer-left">
-                            {/* <ul className="nav">
+  render() {
+    return (
+      <>
+        <div className="app-footer">
+          <div className="app-footer__inner">
+            <div className="app-footer-left">
+              {/* <ul className="nav">
                                 <li className="nav-item">
                                     <a href="javascript:void(0);" className="nav-link">
                                         Footer Link 1
@@ -21,9 +19,9 @@ class AppFooter extends React.Component {
                                     </a>
                                 </li>
                             </ul> */}
-                        </div>
-                        <div className="app-footer-right">
-                            {/* <ul className="nav">
+            </div>
+            <div className="app-footer-right">
+              {/* <ul className="nav">
                                 <li className="nav-item">
                                     <a href="javascript:void(0);" className="nav-link">
                                         Footer Link 3
@@ -38,12 +36,16 @@ class AppFooter extends React.Component {
                                     </a>
                                 </li>
                             </ul> */}
-														<footer> <small>&copy; Copyright 2020</small> </footer> 
-                        </div>
-                    </div>
-                </div>
-            </Fragment>
-        )}
+              <footer>
+                {' '}
+                <small>&copy; Copyright 2020</small>{' '}
+              </footer>
+            </div>
+          </div>
+        </div>
+      </>
+    );
+  }
 }
 
 export default AppFooter;

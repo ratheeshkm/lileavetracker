@@ -68,29 +68,18 @@ module.exports = {
 			let insertResult = await client.query(`INSERT INTO "user-temp-pass" (temppass, userid, status) VALUES ( '123', ${result.rows[0].id}, 'Active')`);
 			if(insertResult.rowCount) {
 				let transporter = createTransporter();
-				// transporter.sendMail(createEmailOptions(req.body.userName, randomFourDigit), function(error, info){
-				// 	if (error) {
-				// 		console.log(error);
-				// 		res.status(500).send(error);
-				// 	} else {
-				// 		console.log('Email sent: ' + info.response);
-				// 		res.status(200).send(result.rows);
-				// 	}
-				// });
 				res.status(200).send(result.rows);
 			} else {
 				res.status(500).send("Error");
 			}
 			client.release();
     } catch (err) {
-			console.log(err)
-      result.error = err;
+			result.error = err;
 			res.status(500).send(result);
     }
 	},
 	passwordLogn: async(req, res) => {
 		let result = '';
-		console.log(req.body);
 		const { userid="", password } = req.body;
 		try {
 			const client = await pool.connect();
@@ -101,8 +90,6 @@ module.exports = {
 				query = query + ` AND userid = ${userid}`;
 			}
 			const result = await client.query(query);
-			console.log("query--->", query)
-			console.log(result.rows)
 			if(result.rows.length) {
 				res.status(200).send("Success"); 
 			} else {

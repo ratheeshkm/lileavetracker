@@ -150,4 +150,8 @@ input[type='number'] {
   background: white;
 }
 
+#popover-trigger-click-root-close {
+  padding: 10px;
+}
+
 /* Input add minus button css */

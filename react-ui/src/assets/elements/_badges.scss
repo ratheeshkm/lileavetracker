@@ -38,7 +38,7 @@
   position: relative;
 
   &::before {
-    content: '';
+    content: "";
     width: 10px;
     height: 10px;
     @include border-radius($border-radius);

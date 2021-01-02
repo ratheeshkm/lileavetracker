@@ -4,6 +4,6 @@ const leaveInitialState = {
   status: [],
   leaveStatus: [],
   leaveReports: []
-}
+};
 
 export default leaveInitialState;
