@@ -19,29 +19,29 @@ const TableList = (props) => {
   const [editedRows, setEditedRows] = useState([]);
   const [selectedRows, setSelectedRows] = useState([]);
 
-  const handleOnSelect = (row, isSelect) => {
-    if (isSelect) {
-      setSelectedRows([...selectedRows, row]);
-    } else {
-      setSelectedRows(
-        selectedRows.filter((item) => (item.id !== row.id ? item : false))
-      );
-    }
-    return true;
-  };
+  // const handleOnSelect = (row, isSelect) => {
+  //   if (isSelect) {
+  //     setSelectedRows([...selectedRows, row]);
+  //   } else {
+  //     setSelectedRows(
+  //       selectedRows.filter((item) => (item.id !== row.id ? item : false))
+  //     );
+  //   }
+  //   return true;
+  // };
 
-  const handleOnSelectAll = (isSelect, rows) => {
-    setSelectedRows(isSelect ? [...rows] : []);
-    return true;
-  };
+  // const handleOnSelectAll = (isSelect, rows) => {
+  //   setSelectedRows(isSelect ? [...rows] : []);
+  //   return true;
+  // };
 
-  const selectRow = {
-    mode: 'checkbox',
-    clickToEdit: true,
-    onSelect: handleOnSelect,
-    onSelectAll: handleOnSelectAll,
-    style: { backgroundColor: '#c8e6c9' }
-  };
+  // const selectRow = {
+  //   mode: 'checkbox',
+  //   clickToEdit: true,
+  //   onSelect: handleOnSelect,
+  //   onSelectAll: handleOnSelectAll,
+  //   style: { backgroundColor: '#c8e6c9' }
+  // };
 
   const deleteSelectedRows = (deletingrows) => {
     const deletingRowsIds = deletingrows.length
@@ -328,7 +328,7 @@ const TableList = (props) => {
                 blurToSave: true,
                 afterSaveCell: handleChange
               })}
-              selectRow={selectRow}
+              //selectRow={selectRow}
               filter={filterFactory()}
               filterPosition="top"
               loading={false}

@@ -65,10 +65,19 @@ module.exports = {
 			await client.query(`DELETE FROM "user-temp-pass" WHERE userid = ${result.rows[0].id}`);
 			let randomFourDigit = Math.floor(1000 + Math.random() * 9000);
 			//'${randomFourDigit}'
-			let insertResult = await client.query(`INSERT INTO "user-temp-pass" (temppass, userid, status) VALUES ( '123', ${result.rows[0].id}, 'Active')`);
+			let insertResult = await client.query(`INSERT INTO "user-temp-pass" (temppass, userid, status) VALUES ( '${randomFourDigit}', ${result.rows[0].id}, 'Active')`);
 			if(insertResult.rowCount) {
 				let transporter = createTransporter();
-				res.status(200).send(result.rows);
+				transporter.sendMail(createEmailOptions(req.body.userName, randomFourDigit), function(error, info){
+					if (error) {
+						console.log(error);
+						res.status(500).send(error);
+					} else {
+						console.log('Email sent: ' + info.response);
+						res.status(200).send(result.rows);
+					}
+				});
+				//res.status(200).send(result.rows);
 			} else {
 				res.status(500).send("Error");
 			}

@@ -9,6 +9,7 @@ import {
   getLeaveStatus,
   getLeaveReport
 } from '../../redux/actions/leaveActions';
+import { getUserList } from '../../redux/actions/appActions';
 
 const mapStateToProps = (state) => {
   const { loading, user, userList } = state.app;
@@ -32,7 +33,8 @@ const actionCreaters = {
   getLeaveTypes,
   updateLeave,
   getLeaveStatus,
-  getLeaveReport
+  getLeaveReport,
+  getUserList
 };
 
 export default connect(mapStateToProps, actionCreaters)(Report);

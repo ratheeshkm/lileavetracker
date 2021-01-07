@@ -72,7 +72,7 @@ module.exports = {
 		try {
 			const client = await pool.connect();
 			let selectQuery = `SELECT id, type, TO_CHAR(startdate :: DATE, 'DD-MM-YYYY') as startdate, 
-			TO_CHAR(enddate :: DATE, 'DD-MM-YYYY') as enddate, description, status, leavecount 
+			TO_CHAR(enddate :: DATE, 'DD-MM-YYYY') as enddate, description, status, leavecount, userid
 			FROM leave`;
 			if(userType === 'Employee') {
 				selectQuery = selectQuery + ` WHERE userid=${userid}`

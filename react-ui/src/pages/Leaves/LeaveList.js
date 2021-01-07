@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { Row, Col, Button } from 'reactstrap';
-
 import { Link } from 'react-router-dom';
 import cx from 'classnames';
 import PageTitle from '../../Layout/AppMain/PageTitle';
@@ -19,12 +18,15 @@ const ApplyLeave = (props) => {
     status,
     updateLeave,
     leaveStatus,
-    getLeaveStatus
+    getLeaveStatus,
+    getUserList,
+    userList
   } = props;
 
   useEffect(() => {
     getLeave();
-  }, [getLeave]);
+    getUserList();
+  }, [getLeave, getUserList]);
 
   useEffect(() => {
     getStatus();
@@ -144,7 +146,7 @@ const ApplyLeave = (props) => {
     );
   };
 
-  const columns = [
+  let columns = [
     {
       dataField: 'id',
       text: 'ID',
@@ -228,7 +230,38 @@ const ApplyLeave = (props) => {
       formatter: ActionColumn
     }
   ];
-
+  if(user.type === 'Approver') {
+    columns = [
+      {
+        dataField: 'userid',
+        text: 'Employee',
+        sort: true,
+        formatter: (cell, row, rowIndex, formatExtraData) =>
+          formatColumn(
+            cell,
+            row,
+            rowIndex,
+            formatExtraData,
+            'userid',
+            userList,
+            'name'
+          ),
+        csvFormatter: (cell, row, rowIndex, formatExtraData) =>
+          formatColumn(
+            cell,
+            row,
+            rowIndex,
+            formatExtraData,
+            'userid',
+            userList,
+            'name'
+          ),
+        editable: false
+      },
+      ...columns
+    ]
+  }
+  console.log("user-->", user.type)
   return (
     <>
       <Row>

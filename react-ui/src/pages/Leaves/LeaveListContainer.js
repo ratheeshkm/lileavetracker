@@ -9,9 +9,10 @@ import {
   updateLeave,
   getLeaveStatus
 } from '../../redux/actions/leaveActions';
+import { getUserList } from '../../redux/actions/appActions';
 
 const mapStateToProps = (state) => {
-  const { loading, user } = state.app;
+  const { loading, user, userList } = state.app;
   const { leave, leaveTypes, status, leaveStatus } = state.leaves;
   return {
     loading,
@@ -19,7 +20,8 @@ const mapStateToProps = (state) => {
     leaveTypes,
     status,
     leaveStatus,
-    user
+    user,
+    userList
   };
 };
 
@@ -29,7 +31,8 @@ const actionCreaters = {
   getStatus,
   getLeaveTypes,
   updateLeave,
-  getLeaveStatus
+  getLeaveStatus,
+  getUserList
 };
 
 export default withRouter(connect(mapStateToProps, actionCreaters)(ApplyLeave));

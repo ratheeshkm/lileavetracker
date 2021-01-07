@@ -20,6 +20,7 @@ const Report = (props) => {
     getStatus,
     getLeaveStatus,
     status,
+    getUserList,
     userList
   } = props;
   const currentYear = new Date().getFullYear();
@@ -41,8 +42,9 @@ const Report = (props) => {
     getLeaveTypes();
     getLeaveStatus();
     getLeaveReport({ year, month });
-  }, [getLeaveReport, getLeaveStatus, getLeaveTypes, getStatus, month, year]);
-
+    getUserList()
+  }, [getLeaveReport, getLeaveStatus, getLeaveTypes, getStatus, getUserList, month, year]);
+  console.log("userList-->", userList)
   const columns = [
     {
       dataField: 'userid',
